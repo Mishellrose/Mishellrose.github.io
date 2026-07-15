@@ -33,6 +33,13 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Verify production build
+        run: |
+          test -f dist/index.html
+          test -f dist/404.html
+          ! grep -q 'src/main.tsx' dist/index.html
+          ls dist/assets/*.js dist/assets/*.css
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
